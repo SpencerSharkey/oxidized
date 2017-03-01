@@ -44,7 +44,7 @@ class Git < Output
       type_repo = File.join(File.dirname(repo), type + '.git')
       outputs.type(type).each do |output|
         (type_cfg << output; next) if not output.name
-        type_file = file + '--' + output.name
+        type_file = file + '.' + output.name
         if @cfg.type_as_directory?
           type_file = type_file
           type_repo = repo
@@ -60,10 +60,13 @@ class Git < Output
 
   def fetch node, group
     begin
-      repo, path = yield_repo_and_path(node, group)
+      repo, path = yield_repo_and_path(node, nil)
       repo = Rugged::Repository.new repo
       index = repo.index
       index.read_tree repo.head.target.tree unless repo.empty?
+      unless group.nil?
+        path = path + '.' + group
+      end
       repo.read(index.get(path)[:oid]).data
     rescue
       'node not found'
