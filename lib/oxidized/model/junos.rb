@@ -24,6 +24,12 @@ class JunOS < Oxidized::Model
     @model = $1 if cfg.match(/^Model: (\S+)/)
     comment cfg
   end
+  
+  cmd 'show configuration | display omit | display xml' do |state|
+    state.type = 'junos-xml'
+    state
+  end
+    
 
   post do
     out = ''
