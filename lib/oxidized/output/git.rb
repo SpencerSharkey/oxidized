@@ -46,7 +46,7 @@ class Git < Output
         (type_cfg << output; next) if not output.name
         type_file = file + '--' + output.name
         if @cfg.type_as_directory?
-          type_file = type + '/' + type_file
+          type_file = type_file
           type_repo = repo
         end
         update type_repo, type_file, output
