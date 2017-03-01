@@ -25,11 +25,11 @@ class JunOS < Oxidized::Model
     comment cfg
   end
   
-  cmd 'show configuration | display omit | display xml' do |state|
-    state.type = 'junos-xml'
-    state
+  cmd 'show configuration | display omit | display xml' do |out|
+    out.type = 'xml'
+    out.name = 'xml'
+    out
   end
-    
 
   post do
     out = ''
